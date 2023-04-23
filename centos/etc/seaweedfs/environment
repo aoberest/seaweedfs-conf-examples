@@ -1,0 +1,6 @@
+# This file use in seaweedfs unit files
+LOG_FILER=/var/log/seaweedfs/filer
+LOG_MASTER=/var/log/seaweedfs/master
+LOG_MOUNT=/var/log/seaweedfs/mount
+LOG_S3=/var/log/seaweedfs/s3
+LOG_VOLUME=/var/log/seaweedfs/volume

@@ -1,0 +1,47 @@
+# Put this file to one of the location, with descending priority
+#    ./security.toml
+#    $HOME/.seaweedfs/security.toml
+#    /etc/seaweedfs/security.toml
+# this file is read by master, volume server, and filer
+
+# the jwt signing key is read by master and volume server.
+# a jwt defaults to expire after 10 seconds.
+#[jwt.signing]
+#key = ""
+#expires_after_seconds = 600           # seconds
+
+
+# all grpc tls authentications are mutual
+# the values for the following ca, cert, and key are paths to the PERM files.
+# the host name is not checked, so the PERM files can be shared.
+[grpc]
+ca = "/var/lib/seaweedfs/cert/SeaweedFS_CA.crt"
+
+[grpc.volume]
+cert = "/var/lib/seaweedfs/cert/volume01.crt"
+key  = "/var/lib/seaweedfs/cert/volume01.key"
+
+[grpc.master]
+cert = "/var/lib/seaweedfs/cert/master01.crt"
+key  = "/var/lib/seaweedfs/cert/master01.key"
+
+[grpc.filer]
+cert = "/var/lib/seaweedfs/cert/filer01.crt"
+key  = "/var/lib/seaweedfs/cert/filer01.key"
+
+[grpc.msg_broker]
+cert = "/var/lib/seaweedfs/cert/msg_broker01.crt"
+key  = "/var/lib/seaweedfs/cert/msg_broker01.key"
+
+# use this for any place needs a grpc client
+# i.e., "weed backup|benchmark|filer.copy|filer.replicate|mount|s3|upload"
+[grpc.client]
+cert = "/var/lib/seaweedfs/cert/client01.crt"
+key  = "/var/lib/seaweedfs/cert/client01.key"
+
+# by default, if the signing key above is set, the Volume UI over HTTP is disabled.
+# by setting ui.access to true, you can re-enable the Volume UI. Despite
+# some information leakage (as the UI is not authenticated), this should not
+# pose a security risk.
+[access]
+ui = true

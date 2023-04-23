@@ -1,0 +1,20 @@
+[Unit]
+Description=weed master server of cluster
+After=network.target
+
+[Service]
+User=weed
+Group=weed
+LimitNOFILE=10240
+Type=simple
+EnvironmentFile=/etc/seaweedfs/environment
+WorkingDirectory=/var/lib/seaweedfs/master
+ExecStart=/usr/bin/weed -v=0 -logdir=${LOG_MASTER} master -options=/etc/seaweedfs/master.conf
+Restart=on-failure
+RestartSec=30s
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=weed-master
+
+[Install]
+WantedBy=multi-user.target

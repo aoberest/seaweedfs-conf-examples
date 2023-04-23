@@ -1,0 +1,21 @@
+[Unit]
+Description=weed filer server of cluster
+After=network.target
+
+[Service]
+User=weed
+Group=weed
+LimitNOFILE=10240
+Type=simple
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+EnvironmentFile=/etc/seaweedfs/environment
+WorkingDirectory=/var/lib/seaweedfs/filer
+ExecStart=/usr/bin/weed -v=0 -logdir=${LOG_FILER} filer -options=/etc/seaweedfs/filer.conf
+Restart=on-failure
+RestartSec=30s
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=weed-filer
+
+[Install]
+WantedBy=multi-user.target

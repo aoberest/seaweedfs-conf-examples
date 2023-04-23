@@ -1,0 +1,21 @@
+[Unit]
+Description=weed volume server of cluster
+After=network.target
+
+[Service]
+User=weed
+Group=weed
+LimitNOFILE=10240
+Type=simple
+EnvironmentFile=/etc/seaweedfs/environment
+WorkingDirectory=/var/lib/seaweedfs/volume
+ExecStart=/usr/bin/weed -v=0 -logdir=${LOG_VOLUME} volume -options=/etc/seaweedfs/volume.conf
+Restart=on-failure
+RestartSec=30s
+TimeoutStopSec=300
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=weed-volume
+
+[Install]
+WantedBy=multi-user.target
